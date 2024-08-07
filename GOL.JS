@@ -1,11 +1,11 @@
 let colorP = document.querySelector("#colorPicker")
-colorP.addEventListener('input', function (){
-    boxColor=colorP.value
+
+colorP.addEventListener('input', function () {
+    boxColor = colorP.value
     redraw()
 });
 
-// console.log(ffffff)  
-let boxColor=colorP.value; 
+let boxColor = colorP.value;
 
 const unitLength = 30;
 const strokeColor = '#FF00FF'; // greyscale
@@ -16,21 +16,26 @@ let nextBoard;
 let slider;
 let button1;
 let button2;
+let globalX = 0;
+let globalY = 0;
 
 
 function setup() {
-    let canvas = createCanvas(windowWidth - 100, windowHeight - 100);
-    canvas.parent(document.querySelector("#canvas"));
+    console.log(document.querySelector("#canvas-container").offsetWidth)
+    let canvasContainer = document.querySelector("#canvas-container")
+    let canvas = createCanvas(Math.floor(canvasContainer.offsetWidth / unitLength) * unitLength, windowHeight - 100);
+    canvas.parent(document.querySelector("#canvas-container"));
     slider = createSlider(1, 100, 20, 2);
-    slider.position();
     slider.style('width', '200px');
-    // slider.parent(document.querySelector(#sliderjj))
+    slider.parent(document.querySelector("#input-group"))
     frameRate(slider.value());
 
 
     /*Calculate the number of columns and rows */
     columns = floor(width / unitLength);
     rows = floor(height / unitLength);
+    // columns = 3;
+    // rows = 3;
 
     currentBoard = [];
 
@@ -39,14 +44,13 @@ function setup() {
         currentBoard[i] = [];
         nextBoard[i] = [];
     }
-    console.log(currentBoard)
+
 
     init()
 
     noLoop()
     console.log(currentBoard)
 }
-
 
 
 function init() {
@@ -56,10 +60,6 @@ function init() {
             nextBoard[i][j] = 0;
         }
     }
-
-    // currentBoard[2][0] = 1
-    // currentBoard[2][1] = 1
-    // currentBoard[2][2] = 1
 }
 
 function randomButton() {
@@ -99,20 +99,22 @@ let loneliness1 = (document.getElementById('lonelinessRule').value);
 let overpopulation1 = (document.getElementById('overpopulationRule').value);
 let reproduction1 = (document.getElementById('reproductionRule').value);
 
-function windowResized() { 
-    resizeCanvas(windowWidth - 100, windowHeight - 100);
-     //Calculate the number of columns and rows
-     columns = floor(width / unitLength);
-     rows = floor(height / unitLength);
-     currentBoard = [];
-     nextBoard = [];
-     for (let i = 0; i < columns; i++) {
-         currentBoard[i] = [];
-         nextBoard[i] = [];
-     }
-} 
+function windowResized() {
+    let canvasContainer = document.querySelector("#canvas-container")
+    console.log("check canvas container offsetwidth", canvasContainer.offsetWidth)
+    resizeCanvas(Math.floor(canvasContainer.offsetWidth / unitLength) * unitLength, windowHeight - 100)
+    //Calculate the number of columns and rows
+    columns = floor(width / unitLength);
+    rows = floor(height / unitLength);
+    currentBoard = [];
+    nextBoard = [];
+    for (let i = 0; i < columns; i++) {
+        currentBoard[i] = [];
+        nextBoard[i] = [];
+    }
 
-
+    init()
+}
 
 function generate() {
 
@@ -143,23 +145,6 @@ function generate() {
                 nextBoard[x][y] = currentBoard[x][y];
             } // Stasis
 
-
-
-            // Rules of Life
-            // if (currentBoard[x][y] == 1 && neighbors < 2) {
-            //     // Die of Loneliness
-            //     nextBoard[x][y] = 0;
-            // } else if (currentBoard[x][y] == 1 && neighbors > 3) {
-            //     // Die of Overpopulation
-            //     nextBoard[x][y] = 0;
-            // } else if (currentBoard[x][y] == 0 && neighbors == 3) {
-            //     // New life due to Reproduction
-            //     nextBoard[x][y] = 1;
-            // } else {
-            //     // Stasis
-            //     nextBoard[x][y] = currentBoard[x][y];
-            // }
-
         }
     }
 
@@ -189,16 +174,59 @@ function mousePressed() {
     mouseDragged();
 }
 
-function mouseReleased() {
-    //console.log("mouseReleased")
-    //  loop();
+
+function mouseMoved() {
+    if (mouseX >= unitLength * columns || mouseY >= unitLength * rows || mouseX < 0 || mouseY < 0) {
+        redraw()
+        return;
+    }
+
+    const x = Math.floor(mouseX / unitLength);
+    const y = Math.floor(mouseY / unitLength);
+
+    globalX = x
+    globalY = y
+
+    preview()
 }
 
-window.addEventListener('resize', function (event) {
-
-}, true);
 
 
+
+function keyPressed() {
+    if (keyCode == 37) {
+        globalX--
+        preview()
+    }
+    if (keyCode == 38) {
+        globalY--
+        preview()
+    }
+    if (keyCode == 39) {
+        globalX++
+        preview()
+    }
+    if (keyCode == 40) {
+        globalY++
+        preview()
+    }
+    if (keyCode == 13) {
+        currentBoard[globalX][globalY] = 1;
+        fill(boxColor);
+        stroke(strokeColor);
+        rect(globalX * unitLength, globalY * unitLength, unitLength, unitLength);
+    }
+
+
+}
+
+function preview() {
+
+    redraw()
+    fill("white");
+    stroke("yellow");
+    rect(globalX * unitLength, globalY * unitLength, unitLength, unitLength);
+}
 
 document.querySelector("#start").addEventListener("click", function () {
     loop();
@@ -218,7 +246,7 @@ document.querySelector("#reset-game").addEventListener("click", function () {
 });
 
 document.getElementById('lonelinessRule').addEventListener('change', function () {
-    loneliness1= (document.getElementById('lonelinessRule').value)
+    loneliness1 = (document.getElementById('lonelinessRule').value)
 })
 
 document.getElementById('overpopulationRule').addEventListener('change', function () {

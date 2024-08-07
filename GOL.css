@@ -1,85 +1,73 @@
 head {
-    background-color: aqua;
+  background-color: aqua;
 }
 
 .Conways {
-    background-color: rgb(26, 255, 0);
-    font-size: 50px;
-    font-style: oblique;
-    font-weight: normal;
-    display:flex;
-    align-items: center;
-    justify-items: center;
-    
-}
-
-.butt-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: rgb(26, 255, 0);
+  font-size: 50px;
+  font-style: oblique;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 body {
-    background-color: rgb(9, 255, 0);
+  background-color: rgb(9, 255, 0);
+}
+
+#canvas-container {
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #start {
-    background-color: rgb(0, 255, 81);
-    font-style: italic;
-    font-weight: 800;
-    width: 140px;
-    height: 50px;
-    font-size: 20px;
-
+  background-color: rgb(0, 255, 81);
+  font-style: italic;
+  font-weight: 800;
+  width: 140px;
+  height: 50px;
+  font-size: 20px;
 }
 
 #stop {
-    background-color: red;
-    color: aliceblue;
-    font-style: italic;
-    font-weight: 800;
-    width: 140px;
-    height: 50px;
-    font-size: 20px;
-
-
-
+  background-color: red;
+  color: aliceblue;
+  font-style: italic;
+  font-weight: 800;
+  width: 140px;
+  height: 50px;
+  font-size: 20px;
 }
 
 #random {
-    background-color: yellow;
-    font-style: italic;
-    font-weight: 800;
-    width: 140px;
-    height: 50px;
-    font-size: 20px;
-
-
+  background-color: yellow;
+  font-style: italic;
+  font-weight: 800;
+  width: 140px;
+  height: 50px;
+  font-size: 20px;
 }
 
 #reset-game {
-    background-color: blue;
-    font-style: italic;
-    color: azure;
-    font-weight: 800;
-    width: 140px;
-    height: 50px;
-    font-size: 20px;
+  background-color: blue;
+  font-style: italic;
+  color: azure;
+  font-weight: 800;
+  width: 140px;
+  height: 50px;
+  font-size: 20px;
 }
 
 #lonliness {
-    background-color: blue;
-    font-style: italic;
-    color: azure;
-    font-weight: 800;
-    width: 140px;
-    height: 50px;
-    font-size: 20px;
-}
-
-#canvas {
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    align-items: center;
-    justify-items: center;
+  background-color: blue;
+  font-style: italic;
+  color: azure;
+  font-weight: 800;
+  width: 140px;
+  height: 50px;
+  font-size: 20px;
 }
